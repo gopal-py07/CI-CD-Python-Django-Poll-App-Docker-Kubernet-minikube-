@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Polls-Application</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'users:home' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+                {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                    <a class="nav-link" href="{% url 'polls:list' %}">Polls</a>
+              </li>
+                {% endif %}
+          </ul>
+          <ul class="navbar-nav">
+            {% if request.user.is_authenticated %}
+              <li class="nav-item-active">
+                  <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+              </li>
+            {% else %}
+                <a class="nav-link" href="{% url 'users:login' %}">SignIn</a>
+                <a class="nav-link" href="{% url 'users:register' %}">SignUp</a>
+            {% endif %}
+  
+          </ul>
+      </div>
+  </nav
+
+
+
+
+
+
