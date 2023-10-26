@@ -7,6 +7,7 @@ pipeline {
                 script {
                     // Define the GitLab repository URL
                     def gitHubRepoURL = 'https://github.com/gopal-py07/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-.git'
+                    sh 'pwd'
 
                     // Checkout the code from GitLab using the Git SCM step
                     checkout([
@@ -25,8 +26,8 @@ pipeline {
                 script {
                     // Run Docker Compose with the specified Compose file
                     //sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-Python-Django-Poll-app/docker-compose.yml up -d'
-                    sh 'docker-compose -f /var/lib/jenkins/workspace/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-/docker-compose.yml build --no-cache'
-                    sh 'docker-compose -f /var/lib/jenkins/workspace/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-/docker-compose.yml up -d'
+                    sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-pyhton-Django-poll-app-github/docker-compose.yml build --no-cache'
+                    sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-pyhton-Django-poll-app-github/docker-compose.yml up -d'
 
                 }
             }
