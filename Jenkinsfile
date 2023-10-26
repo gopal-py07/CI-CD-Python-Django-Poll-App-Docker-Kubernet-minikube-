@@ -74,10 +74,10 @@ pipeline {
         stage('Open Service in Minikube') {
             steps {
                 script {
-                    //sh "${MINIKUBE_PATH} service list"
-                    //sh "${MINIKUBE_PATH} service ${SERVICE_NAME}"
-                    //sh "${MINIKUBE_PATH} dashboard --url"
-                    sh 'xdg-open ' + sh(script: "${MINIKUBE_PATH} service ${SERVICE_NAME} --url", returnStatus: true).trim()
+                    sh "${MINIKUBE_PATH} service list"
+                    sh "${MINIKUBE_PATH} service ${SERVICE_NAME}"
+                    sh "${MINIKUBE_PATH} dashboard --url"
+                    //sh 'xdg-open ' + sh(script: "${MINIKUBE_PATH} service ${SERVICE_NAME} --url", returnStatus: true).trim()
                 }
             }
         }
