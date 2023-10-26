@@ -29,7 +29,7 @@ pipeline {
             }
         }
 
-        stage('Docker Compose') {
+        /*stage('Docker Compose') {
             steps {
                 script {
                     // Build and run Docker Compose with the specified Compose file
@@ -51,7 +51,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Apply Kubernetes Deployment') {
             steps {
