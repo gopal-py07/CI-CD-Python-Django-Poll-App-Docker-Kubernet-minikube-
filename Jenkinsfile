@@ -29,7 +29,7 @@ pipeline {
             }
         }
 
-        /*stage('Docker Compose') {
+        stage('Docker Compose') {
             steps {
                 script {
                     // Build and run Docker Compose with the specified Compose file
@@ -47,11 +47,11 @@ pipeline {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
 
                         // Push the Docker images to your Docker Hub repository
-                        sh "docker push gopalghule05/lnx_poll_jenkins_prj:latest"
+                        sh "docker push gopalghule05/lnx_poll_jenkins_prj_demo:1.0"
                     }
                 }
             }
-        }*/
+        }
 
         stage('Apply Kubernetes Deployment') {
             steps {
@@ -74,7 +74,7 @@ pipeline {
         stage('Open Service in Minikube') {
             steps {
                 script {
-                    sh "${MINIKUBE_PATH} service --all"
+                    sh "${MINIKUBE_PATH} service list"
                     sh "${MINIKUBE_PATH} service ${SERVICE_NAME}"
                     sh "${MINIKUBE_PATH} dashboard --url"
                     //sh 'xdg-open ' + sh(script: "${MINIKUBE_PATH} service ${SERVICE_NAME} --url", returnStatus: true).trim()
