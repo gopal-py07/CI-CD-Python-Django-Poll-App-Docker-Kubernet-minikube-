@@ -56,6 +56,7 @@ pipeline {
         stage('Apply Kubernetes Deployment') {
             steps {
                 script {
+                    sh "${MINIKUBE_PATH} delete"
                     sh "${MINIKUBE_PATH} start"
                     sh "${KUBECTL_PATH} apply -f ${DEPLOYMENT_YML_PATH}"
                 }
