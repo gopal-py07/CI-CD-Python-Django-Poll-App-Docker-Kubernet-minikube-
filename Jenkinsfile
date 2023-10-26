@@ -26,8 +26,8 @@ pipeline {
                 script {
                     // Run Docker Compose with the specified Compose file
                     //sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-Python-Django-Poll-app/docker-compose.yml up -d'
-                    sh 'sudo docker-compose -f /var/lib/jenkins/workspace/ci-cd-pyhton-Django-poll-app-github/docker-compose.yml build --no-cache'
-                    sh 'sudo docker-compose -f /var/lib/jenkins/workspace/ci-cd-pyhton-Django-poll-app-github/docker-compose.yml up -d'
+                    sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-pyhton-Django-poll-app-github/docker-compose.yml build --no-cache'
+                    sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-pyhton-Django-poll-app-github/docker-compose.yml up -d'
 
                 }
             }
