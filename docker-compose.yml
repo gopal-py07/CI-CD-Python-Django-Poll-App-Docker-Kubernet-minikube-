@@ -3,7 +3,7 @@ services:
    web:
        build: .
        container_name: lnx_poll_prj_latest
-       image: gopalghule05/lnx_poll_prj:latest
+       image: gopalghule05/lnx_poll_jenkins_prj:latest
        command: python3 manage.py runserver 0.0.0.0:8000
        ports:
            - 8000:8000

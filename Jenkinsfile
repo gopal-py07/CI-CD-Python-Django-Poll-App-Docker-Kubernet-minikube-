@@ -6,6 +6,10 @@ pipeline {
         GIT_REPO_URL = 'https://github.com/gopal-py07/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-.git'
         WORKSPACE_PATH = "${env.WORKSPACE}"
         DOCKER_COMPOSE_FILE = "${WORKSPACE_PATH}/docker-compose.yml"
+        MINIKUBE_PATH = '/usr/local/bin/minikube'
+        KUBECTL_PATH = '/usr/local/bin/kubectl'
+        DEPLOYMENT_YML_PATH = 'deployment.yml'
+        SERVICE_NAME = 'django-backend-poll-app-jenkins'
     }
 
     stages {
@@ -43,8 +47,35 @@ pipeline {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
 
                         // Push the Docker images to your Docker Hub repository
-                        sh "docker push gopalghule05/lnx_poll_prj_jenkins_test4:latest"
+                        sh "docker push gopalghule05/lnx_poll_jenkins_prj:latest"
                     }
+                }
+            }
+        }
+
+        stage('Apply Kubernetes Deployment') {
+            steps {
+                script {
+                    sh "${MINIKUBE_PATH} start"
+                    sh "${KUBECTL_PATH} apply -f ${DEPLOYMENT_YML_PATH}"
+                }
+            }
+        }
+
+        stage('Expose Deployment as LoadBalancer') {
+            steps {
+                script {
+                    sh "${KUBECTL_PATH} expose deployment ${SERVICE_NAME} --type=LoadBalancer --port=8000"
+                }
+            }
+        }
+
+        stage('Open Service in Minikube') {
+            steps {
+                script {
+                    sh "${MINIKUBE_PATH} service list"
+                    sh "${MINIKUBE_PATH} service ${SERVICE_NAME}"
+                    sh "${MINIKUBE_PATH} dashboard --url"
                 }
             }
         }
