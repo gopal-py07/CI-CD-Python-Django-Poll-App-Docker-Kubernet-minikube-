@@ -25,7 +25,7 @@ pipeline {
                 script {
                     // Run Docker Compose with the specified Compose file
                     //sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-Python-Django-Poll-app/docker-compose.yml up -d'
-                    sh 'docker-compose -f /var/lib/jenkins/workspace/ci-cd-Python-Django-Poll-app/docker-compose.yml build --no-cache'
+                    sh 'docker-compose -f /var/lib/jenkins/workspace/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-/docker-compose.yml build --no-cache'
                     sh 'docker-compose -f /var/lib/jenkins/workspace/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-/docker-compose.yml up -d'
 
                 }
