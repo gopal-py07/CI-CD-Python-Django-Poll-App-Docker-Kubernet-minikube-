@@ -75,6 +75,7 @@ pipeline {
                 script {
                     sh "${MINIKUBE_PATH} service list"
                     sh "${MINIKUBE_PATH} service ${SERVICE_NAME}"
+                    sh "xdg-open $(minikube service ${SERVICE_NAME} --url)"
                     sh "${MINIKUBE_PATH} dashboard --url"
                 }
             }
