@@ -55,8 +55,10 @@ pipeline {
                     if (minikubeStatus == 0) {
                         echo "Minikube is running. Skipping this stage."
                         currentBuild.result = 'SUCCESS'
+                        sh"${MINIKUBE_PATH} delete"
                     } else {
                         echo "Minikube is not running. Starting Minikube..."
+                        sh"${MINIKUBE_PATH} delete"
                         sh "${MINIKUBE_PATH} start"
                     }
                 }
