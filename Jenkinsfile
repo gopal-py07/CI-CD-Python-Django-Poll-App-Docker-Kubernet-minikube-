@@ -52,12 +52,25 @@ pipeline {
                 }
             }
         }
-
+        stage('Check Minikube Status') {
+            steps {
+                script {
+                    def minikubeStatus = sh(script: "${MINIKUBE_PATH} status", returnStatus: true)
+                    
+                    if (minikubeStatus == 0) {
+                        echo "Minikube is running. Skipping this stage."
+                        currentBuild.result = 'SUCCESS' // Mark the build as success and skip subsequent stages
+                    } else {
+                        echo "Minikube is not running. Starting Minikube..."
+                        sh "${MINIKUBE_PATH} start"
+                    }
+                }
+            }
         stage('Apply Kubernetes Deployment') {
             steps {
                 script {
-                    sh "${MINIKUBE_PATH} delete"
-                    sh "${MINIKUBE_PATH} start"
+                    //sh "${MINIKUBE_PATH} delete"
+                    //sh "${MINIKUBE_PATH} start"
                     sh "${KUBECTL_PATH} apply -f ${DEPLOYMENT_YML_PATH}"
                 }
             }
