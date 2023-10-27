@@ -8,7 +8,7 @@ pipeline {
         MINIKUBE_PATH = '/usr/local/bin/minikube'
         KUBECTL_PATH = '/usr/local/bin/kubectl'
         DEPLOYMENT_YML_PATH = 'deployment.yml'
-        SERVICE_NAME = 'django-backend-poll-app-jenkins'
+        SERVICE_NAME = 'django-backend-poll-app-jenkins-demo'
     }
 
     stages {
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-                        sh "docker push gopalghule05/lnx_poll_jenkins_prj_demo:1.0"
+                        sh "docker push gopalghule05/lnx_poll_jenkins_prj_demo:version.0.1"
                     }
                 }
             }
@@ -55,10 +55,8 @@ pipeline {
                     if (minikubeStatus == 0) {
                         echo "Minikube is running. Skipping this stage."
                         currentBuild.result = 'SUCCESS'
-                        sh"${MINIKUBE_PATH} delete"
                     } else {
                         echo "Minikube is not running. Starting Minikube..."
-                        sh"${MINIKUBE_PATH} delete"
                         sh "${MINIKUBE_PATH} start"
                     }
                 }
