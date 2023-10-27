@@ -71,10 +71,18 @@ pipeline {
             }
         }
 
-        stage('Expose Deployment as LoadBalancer') {
+        stage('Check Service in Kubernetes') {
             steps {
                 script {
-                    sh "${KUBECTL_PATH} expose deployment ${SERVICE_NAME} --type=LoadBalancer --port=8000"
+                    def serviceExists = sh(script: "${KUBECTL_PATH} get service ${SERVICE_NAME}", returnStatus: true)
+                    
+                    if (serviceExists == 0) {
+                        echo "Service ${SERVICE_NAME} exists. Skipping the 'Expose Port' stage."
+                        currentBuild.result = 'SUCCESS' // Mark the build as success
+                    } else {
+                        echo "Service ${SERVICE_NAME} does not exist. Proceeding to the 'Expose Port' stage."
+                        sh "${KUBECTL_PATH} expose deployment ${SERVICE_NAME} --type=LoadBalancer --port=8000"
+                    }
                 }
             }
         }
