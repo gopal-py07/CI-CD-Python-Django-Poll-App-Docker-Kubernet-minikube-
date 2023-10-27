@@ -8,7 +8,7 @@ pipeline {
         MINIKUBE_PATH = '/usr/local/bin/minikube'
         KUBECTL_PATH = '/usr/local/bin/kubectl'
         DEPLOYMENT_YML_PATH = 'deployment.yml'
-        SERVICE_NAME = 'django-backend-poll-app-jenkins-demo'
+        SERVICE_NAME = 'django-backend-poll-app-jenkins-service'
     }
 
     stages {
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-                        sh "docker push gopalghule05/lnx_poll_jenkins_prj_demo:version.0.1"
+                        sh "docker push gopalghule05/lnx_poll_prj_jenkins:1.0"
                     }
                 }
             }
