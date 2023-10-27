@@ -66,6 +66,7 @@ pipeline {
                     }
                 }
             }
+        }
         stage('Apply Kubernetes Deployment') {
             steps {
                 script {
