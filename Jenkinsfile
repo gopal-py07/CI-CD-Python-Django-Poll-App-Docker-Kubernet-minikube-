@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Define environment variables for paths
         GIT_REPO_URL = 'https://github.com/gopal-py07/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-.git'
         WORKSPACE_PATH = "${env.WORKSPACE}"
         DOCKER_COMPOSE_FILE = "${WORKSPACE_PATH}/docker-compose.yml"
@@ -17,12 +16,11 @@ pipeline {
             steps {
                 script {
                     sh "pwd"
-                    // Checkout the code from the specified repository URL
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: 'master']], // Specify the branch you want to checkout (main)
-                        doGenerateSubmoduleConfigurations: false, // You can set this to true if you have submodules
-                        extensions: [[$class: 'CleanBeforeCheckout']], // Clean before checkout
+                        branches: [[name: 'master']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'CleanBeforeCheckout']],
                         userRemoteConfigs: [[url: env.GIT_REPO_URL]]
                     ])
                 }
@@ -32,7 +30,6 @@ pipeline {
         stage('Docker Compose') {
             steps {
                 script {
-                    // Build and run Docker Compose with the specified Compose file
                     sh "docker-compose -f ${env.DOCKER_COMPOSE_FILE} build --no-cache"
                     sh "docker-compose -f ${env.DOCKER_COMPOSE_FILE} up -d"
                 }
@@ -42,16 +39,14 @@ pipeline {
         stage('Push Docker Images to Docker Hub') {
             steps {
                 script {
-                    // Log in to Docker Hub using Jenkins credentials
                     withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-
-                        // Push the Docker images to your Docker Hub repository
                         sh "docker push gopalghule05/lnx_poll_jenkins_prj_demo:1.0"
                     }
                 }
             }
         }
+
         stage('Check Minikube Status') {
             steps {
                 script {
@@ -59,7 +54,7 @@ pipeline {
                     
                     if (minikubeStatus == 0) {
                         echo "Minikube is running. Skipping this stage."
-                        currentBuild.result = 'SUCCESS' // Mark the build as success and skip subsequent stages
+                        currentBuild.result = 'SUCCESS'
                     } else {
                         echo "Minikube is not running. Starting Minikube..."
                         sh "${MINIKUBE_PATH} start"
@@ -67,11 +62,10 @@ pipeline {
                 }
             }
         }
+
         stage('Apply Kubernetes Deployment') {
             steps {
                 script {
-                    //sh "${MINIKUBE_PATH} delete"
-                    //sh "${MINIKUBE_PATH} start"
                     sh "${KUBECTL_PATH} apply -f ${DEPLOYMENT_YML_PATH}"
                 }
             }
@@ -91,12 +85,10 @@ pipeline {
                     sh "${MINIKUBE_PATH} service list"
                     sh "${MINIKUBE_PATH} service ${SERVICE_NAME}"
                     sh "${MINIKUBE_PATH} dashboard --url"
-                    //sh 'xdg-open ' + sh(script: "${MINIKUBE_PATH} service ${SERVICE_NAME} --url", returnStatus: true).trim()
+                    sh "xdg-open $(minikube service ${SERVICE_NAME} --url)"
                 }
             }
         }
-
-        // Add more stages for your build, test, and deployment steps here
     }
 
     post {
