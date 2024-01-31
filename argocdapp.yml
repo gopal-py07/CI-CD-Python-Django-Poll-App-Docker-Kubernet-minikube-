@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: poll-app/
+    path: ./poll
     repoURL: https://github.com/gopal-py07/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-.git
     targetRevision: HEAD
   syncPolicy:
