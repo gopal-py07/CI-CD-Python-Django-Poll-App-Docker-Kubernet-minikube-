@@ -62,8 +62,8 @@ pipeline {
                 }
             }
         }
-
-        stage('Apply Kubernetes Deployment') {
+        // commentin jenkins file argocd dplyment testing // for jenkins and minkune please uncomment below code and push file at code level not in any folder
+        /*stage('Apply Kubernetes Deployment') {
             steps {
                 script {
                     sh "${KUBECTL_PATH} apply -f ${DEPLOYMENT_YML_PATH}"
@@ -97,7 +97,7 @@ pipeline {
                 }
             }
         }
-    }
+    }*/
 
     post {
         success {

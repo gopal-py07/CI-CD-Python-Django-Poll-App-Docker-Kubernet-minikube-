@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django-backend-poll-app-jenkins-service
+  name: django-poll-app
   labels:
-    app: django-backend-poll-app-jenkins-service
+    app: django-poll-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: django-backend-poll-app-jenkins-service
+      app: django-poll-app
   template:
     metadata:
       labels:
-        app: django-backend-poll-app-jenkins-service
+        app: django-poll-app
     spec:
       containers:
       - name: django-poll-kube
         imagePullPolicy: Always
-        image: gopalghule05/lnx_poll_prj_jenkins:1.1
+        image: gopalghule05/lnx_poll_prj_jenkins:1.0
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
         ports:
         - containerPort: 8000
