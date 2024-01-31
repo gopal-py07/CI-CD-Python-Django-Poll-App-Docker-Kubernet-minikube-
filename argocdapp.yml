@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: poll-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: poll-app
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: poll-app/
+    repoURL: https://github.com/gopal-py07/CI-CD-Python-Django-Poll-App-Docker-Kubernet-minikube-.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
