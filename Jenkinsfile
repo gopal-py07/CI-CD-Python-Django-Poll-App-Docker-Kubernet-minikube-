@@ -62,7 +62,7 @@ pipeline {
                 }
             }
         }
-        // commentin jenkins file argocd dplyment testing // for jenkins and minkune please uncomment below code and push file at code level not in any folder
+        //commentin jenkins file argocd dplyment testing // for jenkins and minkune please uncomment below code and push file at code level not in any folder
         /*stage('Apply Kubernetes Deployment') {
             steps {
                 script {
@@ -96,8 +96,8 @@ pipeline {
                     //sh "xdg-open $(minikube service ${SERVICE_NAME} --url)"
                 }
             }
-        }
-    }*/
+        }*/
+    }
 
     post {
         success {
