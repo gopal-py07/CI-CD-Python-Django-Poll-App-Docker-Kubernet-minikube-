@@ -41,7 +41,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-                        sh "docker push gopalghule05/lnx_poll_prj_jenkins:1.0"
+                        sh "docker push gopalghule05/lnx_poll_prj_jenkins:1.1"
                     }
                 }
             }
