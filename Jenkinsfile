@@ -41,13 +41,13 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-                        sh "docker push gopalghule05/lnx_poll_prj_jenkins:1.1"
+                        sh "docker push gopalghule05/lnx_poll_prj_jenkins:1.2"
                     }
                 }
             }
         }
 
-        stage('Check Minikube Status') {
+        /*stage('Check Minikube Status') {
             steps {
                 script {
                     def minikubeStatus = sh(script: "${MINIKUBE_PATH} status", returnStatus: true)
@@ -61,7 +61,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         //commentin jenkins file argocd dplyment testing // for jenkins and minkune please uncomment below code and push file at code level not in any folder
         /*stage('Apply Kubernetes Deployment') {
             steps {
