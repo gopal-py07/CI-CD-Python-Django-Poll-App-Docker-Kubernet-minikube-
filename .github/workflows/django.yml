@@ -52,12 +52,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: tanmay238/images:app-${{ github.run_number }}
+      - name: Build Docker image using Docker Compose
+        run: docker-compose -f path/to/your/docker-compose.yml build --build-arg TAG=${{ github.run_number }}
+      
+      - name: Push Docker image to Docker Hub
+        run: docker-compose -f path/to/your/docker-compose.yml push
 
   modifygit:
     needs: docker
