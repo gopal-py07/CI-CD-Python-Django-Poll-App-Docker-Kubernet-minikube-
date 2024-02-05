@@ -84,5 +84,5 @@ jobs:
         git push
       env:
         GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-        GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+        GIT_PASSWORD: ${{ secrets.GIT_TOKEN }}
         RUN_NUMBER: ${{ github.run_number }}
