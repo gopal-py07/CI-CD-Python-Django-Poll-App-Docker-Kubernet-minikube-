@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
@@ -16,74 +16,66 @@ jobs:
         python-version: [3.7, 3.8, 3.9]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      
-      - name: Run Tests
-        run: |
-          python manage.py test
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Tests
+      run: |
+        python manage.py test
 
   docker:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Build Docker image using Docker Compose
-        run: docker-compose -f path/to/your/docker-compose.yml build --build-arg TAG=${{ github.run_number }}
-      
-      - name: Push Docker image to Docker Hub
-        run: docker-compose -f path/to/your/docker-compose.yml push
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Docker image using Docker Compose
+      run: docker-compose build --build-arg TAG=${{ github.run_number }}
+
+
+    - name: Push Docker image to Docker Hub
+      run: docker-compose push
 
   modifygit:
     needs: docker
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Changing the deployment of git repo
-        uses: actions/checkout@v3
-        with:
-          repository: 'tanmaybhandge/App-Manifest-'
-          token: ${{ secrets.GIT_PASSWORD }}
-      
-      - name: Modify the image
-        run: |
-          git config user.email tanmay8928@gmail.com
-          git config user.name Tanmay
-          pwd
-          cat deployment.yaml
-          pwd
-          sed -i "s+tanmay238/images.*+tanmay238/images:app-$RUN_NUMBER+g" deployment.yaml
-          cat deployment.yaml
-          git add .
-          git commit -m "Done by Github Actions Job changemanifest: ${{ github.run_number }}"
-          git push origin main
-        env:
-          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-          RUN_NUMBER: ${{ github.run_number }}
+    - name: Modify the image
+      run: |
+        git config user.email gpalghule05@gmail.com
+        git config user.name gopal-py07
+        pwd
+        cat deployment.yaml
+        pwd
+        sed -i "s+gopalghule05/lnx_poll_prj_argocd.*+gopalghule05/lnx_poll_prj_argocd:$RUN_NUMBER+g" deployment.yaml
+        cat deployment.yaml
+        git add .
+        git commit -m "Done by Github Actions Job change manifest: ${{ github.run_number }}"
+        git push origin main
+      env:
+        GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+        GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+        RUN_NUMBER: ${{ github.run_number }}
