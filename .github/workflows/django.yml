@@ -78,11 +78,11 @@ jobs:
         cat deployment.yml
         pwd
         sed -i "s+gopalghule05/lnx_poll_prj_argocd.*+gopalghule05/lnx_poll_prj_argocd:$RUN_NUMBER+g" deployment.yml
-        cat deployment.yaml
+        cat deployment.yml
         git add .
         git commit -m "Done by Github Actions Job change manifest: ${{ github.run_number }}"
         git push origin Master
-      # env:
-      #   GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-      #   GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-      #   RUN_NUMBER: ${{ github.run_number }}
+      env:
+        GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+        GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+        RUN_NUMBER: ${{ github.run_number }}
