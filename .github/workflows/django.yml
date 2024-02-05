@@ -63,8 +63,15 @@ jobs:
     needs: docker
     runs-on: ubuntu-latest
     steps:
+    - name: Print current directory
+      run: pwd
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Modify the image
       run: |
+        pwd
         git config user.email gopalghule05@gmail.com
         git config user.name gopal-py07
         pwd
