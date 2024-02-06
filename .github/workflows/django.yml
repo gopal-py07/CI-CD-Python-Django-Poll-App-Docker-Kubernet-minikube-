@@ -55,8 +55,9 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build Docker image using Docker Compose
-      run: docker-compose build --build-arg TAG=${{ github.run_number }}
-
+      run: |
+        echo ${{ github.run_number }}
+        docker-compose build --build-arg TAG=${{ github.run_number }}
 
     - name: Push Docker image to Docker Hub
       run: docker-compose push
