@@ -17,7 +17,7 @@ spec:
       containers:
       - name: django-poll-kube
         imagePullPolicy: Always
-        image: gopalghule05/lnx_poll_prj_argocd:27
+        image: gopalghule05/lnx_poll_prj_argocd:28
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
         ports:
         - containerPort: 8000
