@@ -77,6 +77,7 @@ jobs:
         git config user.email gopalghule05@gmail.com
         git config user.name gopal-py07
         pwd
+        cd argocd
         cat deployment.yml
         pwd
         sed -i "s+gopalghule05/lnx_poll_prj_argocd:.*+gopalghule05/lnx_poll_prj_argocd:$RUN_NUMBER+g" deployment.yml
