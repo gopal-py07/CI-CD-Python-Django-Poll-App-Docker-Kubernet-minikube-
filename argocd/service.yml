@@ -4,7 +4,7 @@ metadata:
   name: django-poll-app-service
 spec:
   selector:
-    app: django-poll-app
+    app: django-poll-app1
   ports:
   - protocol: TCP
     port: 8080
