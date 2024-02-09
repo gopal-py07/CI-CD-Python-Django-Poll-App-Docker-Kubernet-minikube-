@@ -1,21 +1,29 @@
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: poll-app-deployment
+  name: django-poll-app
+  labels:
+    app: django-poll-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: poll-app
+      app: django-poll-app
   template:
     metadata:
-      name: pollpod
       labels:
-        app: poll-app
+        app: django-poll-app
     spec:
       containers:
       - name: django-poll-kube
-        image: gopalghule05/lnx_poll_prj_argocd:99
+        imagePullPolicy: Always
+        image: gopalghule05/lnx_poll_prj_argocd:34
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
         ports:
         - containerPort: 8000
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  revisionHistoryLimit: 5

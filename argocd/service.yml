@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: django-poll-app-service1
+  name: django-poll-app-service
 spec:
   selector:
-    app: poll-app
+    app: django-poll-app
   ports:
   - protocol: TCP
     port: 8080
